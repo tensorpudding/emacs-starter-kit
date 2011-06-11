@@ -105,6 +105,10 @@ imenu index, then jumps to that symbol's location."
    nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|NOCOMMIT\\)"
           1 font-lock-warning-face t))))
 
+(defun esk-add-line-numbers ()
+  (linum-mode 1)
+  (setq linum-format "%5d "))
+
 (add-hook 'prog-mode-hook 'esk-local-column-number-mode)
 (add-hook 'prog-mode-hook 'esk-local-comment-auto-fill)
 (add-hook 'prog-mode-hook 'esk-turn-on-hl-line-mode)
@@ -112,6 +116,7 @@ imenu index, then jumps to that symbol's location."
 (add-hook 'prog-mode-hook 'esk-pretty-lambdas)
 (add-hook 'prog-mode-hook 'esk-add-watchwords)
 (add-hook 'prog-mode-hook 'esk-turn-on-idle-highlight-mode)
+(add-hook 'prog-mode-hook 'esk-add-line-numbers)
 
 (defun esk-turn-off-tool-bar ()
   (tool-bar-mode -1))
