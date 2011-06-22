@@ -70,6 +70,7 @@
   (global-set-key (kbd "C-x f") 'esk-recentf-ido-find-file)
   (global-set-key (kbd "C-c y") 'bury-buffer)
   (global-set-key (kbd "C-c r") 'revert-buffer)
+  (global-set-key (kbd "C-c d") 'ediff-current-file)
 
   ;; Window switching. (C-x o goes to the next window)
   (windmove-default-keybindings) ;; Shift+direction
