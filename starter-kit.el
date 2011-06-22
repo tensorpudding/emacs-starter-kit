@@ -4,7 +4,7 @@
 ;;
 ;; Author: Phil Hagelberg <technomancy@gmail.com>
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/StarterKit
-;; Version: 2.0
+;; Version: 2.0.1
 ;; Keywords: convenience
 
 ;; This file is not part of GNU Emacs.
@@ -40,14 +40,11 @@
 
 ;;;###autoload
 (progn
-  (add-to-list 'package-archives '("technomancy" . 
-                                   "http://repo.technomancy.us/emacs/") t)
   ;; Turn off mouse interface early in startup to avoid momentary display
   (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
     (when (fboundp mode) (funcall mode -1)))
 
-  (dolist (l '(uniquify starter-kit-defuns starter-kit-bindings
-                        starter-kit-misc starter-kit-eshell))
+  (dolist (l '(uniquify starter-kit-defuns starter-kit-misc starter-kit-eshell))
     (require l))
 
   ;; You can keep system- or user-specific customizations here
@@ -60,7 +57,8 @@
   (when (file-exists-p esk-system-config) (load esk-system-config))
   (when (file-exists-p esk-user-config) (load esk-user-config))
   (when (file-exists-p esk-user-dir)
-    (mapc 'load (directory-files esk-user-dir nil ".*el$"))))
+    (dolist (l (directory-files esk-user-dir nil "^[^#].*el$"))
+      (load l))))
 
 (provide 'starter-kit)
 ;;; starter-kit.el ends here

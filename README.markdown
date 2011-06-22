@@ -19,21 +19,27 @@ screencast](http://peepcode.com/products/meet-emacs) helpful. The
 
 ## Installation
 
-You'll need Emacs 24, which comes with package.el.
+You'll need Emacs 24, which comes with package.el. It's not hard to
+compile [from source](http://github.com/emacsmirror/emacs), but
+precompiled versions are readily available for
+[Debian-based systems](http://emacs.naquadah.org/) and
+[Mac OS X](http://emacsformacosx.com).
 
-Add Marmalade as a package archive source:
+Add Marmalade as a package archive source in ~/.emacs.d/init.el:
 
     (require 'package)
     (add-to-list 'package-archives
                  '("marmalade" . "http://marmalade-repo.org/packages/") t)
+    (package-initialize)
 
 Then you can install it:
 
     M-x package-refresh-contents
     M-x package-install RET starter-kit RET
 
-Improved support for various languages are packaged separately.
+Other modules are also available:
 
+* starter-kit-bindings (spun out due to concerns about keybinding conventions)
 * starter-kit-js
 * starter-kit-ruby
 * starter-kit-perl
@@ -43,6 +49,12 @@ The Starter Kit used to be a git repository that you checked out and
 used as your own personal .emacs.d directory, but it's been
 restructured so that it can be treated like any other package, freeing
 you up to structure your .emacs.d directory as you wish.
+
+There are a few conventions for naming files which will get loaded
+automatically. ~/.emacs.d/$USER.el as well as any files in the
+~/.emacs.d/$USER/ directory. Finally, the Starter Kit will look for a
+file named after the current hostname ending in ".el" which will allow
+host-specific configuration.
 
 ## FAQ
 
@@ -85,6 +97,11 @@ other package.el dependencies; users may pick and choose which they
 want. It's also more modular, so language-specific starter kit modules
 must be installed separately. User-specific and host-specific files
 are still honored.
+
+## Todo
+
+* Further testing of deeply-transitive dependencies
+* Ensure dependencies are loaded for byte-compilation in package.el
 
 ## Copyright
 
