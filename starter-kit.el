@@ -1,10 +1,10 @@
 ;;; starter-kit.el --- Saner defaults and goodies.
 ;;
-;; Copyright (c) 2008-2010 Phil Hagelberg and contributors
+;; Copyright (c) 2008-2011 Phil Hagelberg and contributors
 ;;
 ;; Author: Phil Hagelberg <technomancy@gmail.com>
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/StarterKit
-;; Version: 2.0.1
+;; Version: 2.0.2
 ;; Keywords: convenience
 
 ;; This file is not part of GNU Emacs.
@@ -44,8 +44,7 @@
   (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
     (when (fboundp mode) (funcall mode -1)))
 
-  (dolist (l '(uniquify starter-kit-defuns starter-kit-misc starter-kit-eshell))
-    (require l))
+  (mapc 'require '(uniquify starter-kit-defuns starter-kit-misc))
 
   ;; You can keep system- or user-specific customizations here
   (setq esk-system-config (concat user-emacs-directory system-name ".el")
@@ -54,11 +53,14 @@
 
   (add-to-list 'load-path esk-user-dir)
 
+  (setq smex-save-file (concat user-emacs-directory ".smex-items"))
+  (smex-initialize)
+  (global-set-key (kbd "M-x") 'smex)
+
   (when (file-exists-p esk-system-config) (load esk-system-config))
   (when (file-exists-p esk-user-config) (load esk-user-config))
   (when (file-exists-p esk-user-dir)
-    (dolist (l (directory-files esk-user-dir nil "^[^#].*el$"))
-      (load l))))
+    (mapc 'load (directory-files esk-user-dir nil "^[^#].*el$"))))
 
 (provide 'starter-kit)
 ;;; starter-kit.el ends here

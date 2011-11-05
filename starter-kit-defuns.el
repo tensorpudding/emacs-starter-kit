@@ -4,7 +4,7 @@
 ;;
 ;; Author: Phil Hagelberg <technomancy@gmail.com>
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/StarterKit
-;; Version: 2.0.1
+;; Version: 2.0.2
 ;; Keywords: convenience
 
 ;; This file is not part of GNU Emacs.
@@ -37,37 +37,12 @@
 
 ;;; Code:
 
-(require 'thingatpt)
-(require 'imenu)
-
-;; Buffer-related
-
-(defun esk-flatten-assoc-tree (tree pred)
-  "Returns an alist of only (key . leaf) pairs in TREE. PRED
-determines whether a value is a sub-alist or a leaf."
-  (flet ((inner (lst)
-                (mapcan (lambda (elt)
-                          (cond ((atom elt) nil)
-                                ((funcall pred elt) (inner elt))
-                                (t (list elt))))
-                        lst)))
-    (inner tree)))
-
-(defun esk-ido-imenu ()
-  "Queries with `ido-completing-read' a symbol in the buffer's
-imenu index, then jumps to that symbol's location."
-  (interactive)
-  (goto-char
-   (let ((lst (nreverse (esk-flatten-assoc-tree
-                         (imenu--make-index-alist) 'imenu--subalist-p))))
-     (cdr (assoc (ido-completing-read "Symbol: " (mapcar 'car lst)) lst)))))
-
 ;;; These belong in prog-mode-hook:
 
 ;; We have a number of turn-on-* functions since it's advised that lambda
 ;; functions not go in hooks. Repeatedly evaling an add-to-list with a
 ;; hook value will repeatedly add it since there's no way to ensure
-;; that a lambda doesn't already exist in the list.
+;; that a byte-compiled lambda doesn't already exist in the list.
 
 (defun esk-local-column-number-mode ()
   (make-local-variable 'column-number-mode)
@@ -78,7 +53,8 @@ imenu index, then jumps to that symbol's location."
   (auto-fill-mode t))
 
 (defun esk-turn-on-hl-line-mode ()
-  (when window-system (hl-line-mode t)))
+  (when (> (display-color-cells) 8)
+    (hl-line-mode t)))
 
 (defun esk-turn-on-save-place-mode ()
   (require 'saveplace)
@@ -118,6 +94,9 @@ imenu index, then jumps to that symbol's location."
 (add-hook 'prog-mode-hook 'esk-turn-on-idle-highlight-mode)
 (add-hook 'prog-mode-hook 'esk-add-line-numbers)
 
+(defun esk-prog-mode-hook ()
+  (run-hooks 'prog-mode-hook))
+
 (defun esk-turn-off-tool-bar ()
   (tool-bar-mode -1))
 
@@ -136,14 +115,7 @@ imenu index, then jumps to that symbol's location."
   (esk-untabify-buffer)
   (delete-trailing-whitespace))
 
-(defun esk-recentf-ido-find-file ()
-  "Find a recent file using ido."
-  (interactive)
-  (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
-    (when file
-      (find-file file))))
-
-;; Other
+;; Commands
 
 (defun esk-eval-and-replace ()
   "Replace the preceding sexp with its value."
@@ -171,6 +143,16 @@ imenu index, then jumps to that symbol's location."
           "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla "
           "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in "
           "culpa qui officia deserunt mollit anim id est laborum."))
+
+(defun esk-suck-it (suckee)
+  "Insert a comment of appropriate length about what can suck it."
+  (interactive "MWhat can suck it? ")
+  (let ((prefix (concat ";; " suckee " can s"))
+        (postfix "ck it!")
+        (col (current-column)))
+    (insert prefix)
+    (dotimes (_ (- 80 col (length prefix) (length postfix))) (insert "u"))
+    (insert postfix)))
 
 (defun esk-insert-date ()
   "Insert a time-stamp according to locale's date and time format."

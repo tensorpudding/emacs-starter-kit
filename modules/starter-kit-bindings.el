@@ -4,9 +4,9 @@
 ;;
 ;; Author: Phil Hagelberg <technomancy@gmail.com>
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/StarterKit
-;; Version: 2.0.1
+;; Version: 2.0.2
 ;; Keywords: convenience
-;; Package-Requires: ((starter-kit "2.0.1"))
+;; Package-Requires: ((starter-kit "2.0.2"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -40,6 +40,9 @@
 
 ;;;###autoload
 (progn
+  ;; It's all about the project.
+  (global-set-key (kbd "C-c f") 'find-file-in-project)
+
   ;; You know, like Readline.
   (global-set-key (kbd "C-M-h") 'backward-kill-word)
 
@@ -63,11 +66,10 @@
   (global-set-key (kbd "C-M-r") 'isearch-backward)
 
   ;; Jump to a definition in the current file. (Protip: this is awesome.)
-  (global-set-key (kbd "C-x C-i") 'esk-ido-imenu)
+  (global-set-key (kbd "C-x C-i") 'imenu)
 
   ;; File finding
   (global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
-  (global-set-key (kbd "C-x f") 'esk-recentf-ido-find-file)
   (global-set-key (kbd "C-c y") 'bury-buffer)
   (global-set-key (kbd "C-c r") 'revert-buffer)
   (global-set-key (kbd "C-c d") 'ediff-current-file)
@@ -87,16 +89,13 @@
   (global-set-key (kbd "C-x C-m") 'shell)
 
   ;; If you want to be able to M-x without meta (phones, etc)
-  (global-set-key (kbd "C-c C-x") 'execute-extended-command)
+  (global-set-key (kbd "C-c x") 'execute-extended-command)
 
   ;; Help should search more than just commands
   (global-set-key (kbd "C-h a") 'apropos)
 
   ;; Should be able to eval-and-replace anywhere.
   (global-set-key (kbd "C-c e") 'esk-eval-and-replace)
-
-  ;; For debugging Emacs modes
-  (global-set-key (kbd "C-c p") 'esk-message-point)
 
   ;; M-S-6 is awkward
   (global-set-key (kbd "C-c q") 'join-line)
