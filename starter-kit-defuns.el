@@ -1,6 +1,7 @@
 ;;; starter-kit-defuns.el --- Saner defaults and goodies: function defs.
 ;;
 ;; Copyright (c) 2008-2010 Phil Hagelberg and contributors
+;; Copyright (c) 2011 Michael Moorman
 ;;
 ;; Author: Phil Hagelberg <technomancy@gmail.com>
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/StarterKit
@@ -66,6 +67,9 @@
 (defun esk-turn-on-paredit ()
   (paredit-mode t))
 
+(defun esk-turn-on-yas ()
+  (yas/minor-mode))
+
 (defun esk-turn-on-idle-highlight-mode ()
   (idle-highlight-mode t))
 
@@ -93,6 +97,7 @@
 (add-hook 'prog-mode-hook 'esk-add-watchwords)
 (add-hook 'prog-mode-hook 'esk-turn-on-idle-highlight-mode)
 (add-hook 'prog-mode-hook 'esk-add-line-numbers)
+(add-hook 'prog-mode-hook 'esk-turn-on-yas)
 
 (defun esk-prog-mode-hook ()
   (run-hooks 'prog-mode-hook))
