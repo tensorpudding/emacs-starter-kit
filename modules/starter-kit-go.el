@@ -4,9 +4,9 @@
 ;;
 ;; Author: Michael Moorman <tensorpuddin@devio.us>
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/StarterKit
-;; Version: 2.0
+;; Version: 2.0.3
 ;; Keywords: convenience
-;; Package-Requires: ((starter-kit "2.0.1") (go-mode "9846"))
+;; Package-Requires: ((starter-kit "2.0.3") (go-mode "9846"))
 
 ;; This file is not part of GNU Emacs.
 
