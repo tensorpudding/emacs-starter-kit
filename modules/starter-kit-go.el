@@ -51,3 +51,4 @@
           (define-key go-mode-map (kbd "RET") 'reindent-then-newline-and-indent)))
 
 (provide 'starter-kit-go)
+;;; starter-kit-go.el ends here
