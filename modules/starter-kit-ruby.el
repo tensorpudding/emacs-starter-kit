@@ -1,12 +1,12 @@
 ;;; starter-kit-ruby.el --- Saner defaults and goodies for Ruby
 ;;
-;; Copyright (c) 2008-2010 Phil Hagelberg and contributors
+;; Copyright (c) 2008-2012 Phil Hagelberg and contributors
 ;;
 ;; Author: Phil Hagelberg <technomancy@gmail.com>
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/StarterKit
-;; Version: 2.0.1
+;; Version: 2.0.3
 ;; Keywords: convenience
-;; Package-Requires: ((inf-ruby "2.2.1") (starter-kit "2.0.1"))
+;; Package-Requires: ((inf-ruby "2.2.3") (starter-kit "2.0.1"))
 ;; This file is not part of GNU Emacs.
 
 ;;; Commentary:
@@ -17,8 +17,6 @@
 ;; -Neal Stephenson, "In the Beginning was the Command Line"
 
 ;; This file contains tweaks specific to Ruby.
-
-;; This file is in need of a maintainer.
 
 ;;; License:
 
@@ -50,13 +48,15 @@
        (define-key ruby-mode-map (kbd "RET") 'reindent-then-newline-and-indent)
        (define-key ruby-mode-map (kbd "C-M-h") 'backward-kill-word)))
 
-  (global-set-key (kbd "C-h S-r") 'ri)
+  (define-key 'help-command (kbd "S-r") 'ri)
 
   ;; Rake files are ruby, too, as are gemspecs, rackup files, etc.
   (add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("\\.thor$" . ruby-mode))
   (add-to-list 'auto-mode-alist '("\\.gemspec$" . ruby-mode))
   (add-to-list 'auto-mode-alist '("\\.ru$" . ruby-mode))
   (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+  (add-to-list 'auto-mode-alist '("Thorfile$" . ruby-mode))
   (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
   (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
   (add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))

@@ -103,7 +103,7 @@
   (run-hooks 'prog-mode-hook))
 
 (defun esk-turn-off-tool-bar ()
-  (tool-bar-mode -1))
+  (if (functionp 'tool-bar-mode) (tool-bar-mode -1)))
 
 (defun esk-untabify-buffer ()
   (interactive)
